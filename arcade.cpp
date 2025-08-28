@@ -10,51 +10,57 @@ class arc
 private:
     string pass = "helsinki@1";
 public:
-    void playerdetails(string Pname = "Player One");
+    static bool flag;
+    void currentplayer(arc s1);
     string userpassword;
     int gno; //future use
     string username;
-    float userbalance;
+    double userbalance;
     string gamelst[2];
+
+    //constructors 
     arc() {   
         gamelst[0] = "number guesser";  //function name num_gss
         gamelst[1] = "Black Jack";      //functon name blackjck
+        username="PlayerOne";
+        userbalance=100;
+    }
+    arc(string s1,double s2)
+    {
+         gamelst[0] = "number guesser";  //function name num_gss
+        gamelst[1] = "Black Jack";      //functon name blackjck
+        username=s1;
+        userbalance=s2;
     }
 
     void gamelist();
     friend bool chck(arc s1);
     int game_selecter(int n);
-    int valid(arc s1);
+    //static bool valid(arc s1);
 
 
-    void menu();
+    static void menu();
     void menu(bool& flag);
     void menu(const bool& flag);
+    void useraccount();
+     static bool takeinput();
 
 
-    
-    void cardset();
-    void cardpicker();
-    void userprof(string a,double amt);
+
+    //void cardset();
+    //void cardpicker();
     // methods that actually have working of games. 
     void num_gss();
     void blackjck();
     
 };
-
-
-
-void arc::userprof(string a,double amt)
-{
-    username=a;
-    userbalance=amt;
-}
  void arc::menu(){
     system("cls");
     cout<<endl<<"       Welcome To Akshat's Arcade"<<endl;
     cout<<"______________________________________________________"<<endl;
      
     cout<<"Please Sign In before continuing";
+    arc::flag=takeinput();
  }
 
 void arc::menu(const bool& flag) {
@@ -74,8 +80,22 @@ void arc::menu(const bool& flag) {
 void arc::menu(bool& flag){
     cout<<endl<<"third menu was called"<<endl<<"thanks for playing";
 }
- int arc::valid(arc s1)
+bool arc::takeinput(){char inp;
+     cout<< "do you want to enter your name "<<endl;
+    cout << " y/n" << endl;
+    cin >> inp;
+    if(inp=='y')
+    {
+        return true;
+    }
+        else{
+        return false;}
+
+
+}
+/* bool arc::valid(arc s1)
  {
+    
     string name;
     char inp;
      cout<< "do you want to enter your name "<<endl;
@@ -93,30 +113,35 @@ void arc::menu(bool& flag){
      cout<<"1.Ban Player"<<endl;
      cout<<"2.Show Player History"<<endl;
      cout<<"3.whitelist Player"<<endl<<endl<<endl;
-        return 0;
+        return false;
     }
 else
  {
 cout<<"program terminated";
-return 0;}
+return false;}
 
 
 
 }
     if (inp == 'y') {
-        cout << "please enter your name";
-        cin >>name;
-        s1.playerdetails(name);
-        return 0;
+        takeinput();
     }
     else {
-        s1.playerdetails();
-        return 0;
+        s1.currentplayer();
+        return false;
     }
- }
-void arc::playerdetails(string Pname) {
+ }*/
+void arc::currentplayer(arc s1) {
     system("cls");
-    cout << "current player is " << Pname << endl;
+    cout << "current player is " << s1.username<< endl;
+    cout<<"balance:"<<s1.userbalance<<endl;
+}
+void arc::useraccount(){
+    {
+        cin>>username;
+        cin>>userbalance;
+    }
+
 }
 bool chck(arc s1)
  {
@@ -166,14 +191,33 @@ int arc::game_selecter(int n) {
     return 0;
 }
 
-
+bool arc::flag;
 int main() { 
-    arc s1;
+
     bool x=true;
-    s1.menu();
-    s1.valid(s1);
-    s1.menu(true);
+    string a1;
+    double a2;
+    arc::menu();
+    cout<<arc::flag;
+    if(arc::flag==true)
+    {
+        cout << "please enter your name";
+        cin >> a1;
+        cout << "please enter your balance";
+        cin >> a2;
+        arc s1(a1,a2);
+        s1.currentplayer(s1);
+        s1.menu(true);
     s1.menu(x);
     return 0;
+    }
+    else
+    {
+        arc s1;
+        s1.currentplayer(s1);
+        s1.menu(true);
+    s1.menu(x);
+    return 0;
+    }
 }
 
