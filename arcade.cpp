@@ -20,31 +20,100 @@ public:
         gamelst[0] = "number guesser";  //function name num_gss
         gamelst[1] = "Black Jack";      //functon name blackjck
     }
+
     void gamelist();
     friend bool chck(arc s1);
     int game_selecter(int n);
+    int valid(arc s1);
 
 
-    /* void menu();
+    void menu();
+    void menu(bool& flag);
+    void menu(const bool& flag);
+
+
+    
     void cardset();
     void cardpicker();
-    void userprof(string a,double amt);*/
+    void userprof(string a,double amt);
     // methods that actually have working of games. 
-
-
     void num_gss();
     void blackjck();
+    
 };
 
 
-/* void arc::userprof(string a,double amt)
+
+void arc::userprof(string a,double amt)
 {
     username=a;
     userbalance=amt;
 }
-*/
+ void arc::menu(){
+    system("cls");
+    cout<<endl<<"       Welcome To Akshat's Arcade"<<endl;
+    cout<<"______________________________________________________"<<endl;
+     
+    cout<<"Please Sign In before continuing";
+ }
+
+void arc::menu(const bool& flag) {
+    cout << "Available Games:\n";
+    int n = 0;
+    for (int i = 0; i < 2; i++) {
+        cout << i + 1 << ". " << gamelst[i] << endl;
+    }
+    cout << "enter game number to play" << endl;
+    cin.clear();
+    cin >> n;
+    if (n > 2 || n < 1)
+        cout << "enter valid input";
+    if (n < 3 && n > 0)
+        game_selecter(n);
+}
+void arc::menu(bool& flag){
+    cout<<endl<<"third menu was called"<<endl<<"thanks for playing";
+}
+ int arc::valid(arc s1)
+ {
+    string name;
+    char inp;
+     cout<< "do you want to enter your name "<<endl;
+    cout << " y/n" << endl;
+    cin >> inp;
+    if(inp=='d')
+    {
+    cout<<"please enter secret code"<<endl;
+    cin>>s1.userpassword;
+    if(chck(s1)==true)
+    {
+        system("cls");
+     cout<<"youre in developer mode"<<endl;
+     cout<<"____________________"<<endl<<endl;
+     cout<<"1.Ban Player"<<endl;
+     cout<<"2.Show Player History"<<endl;
+     cout<<"3.whitelist Player"<<endl<<endl<<endl;
+        return 0;
+    }
+else
+ {
+cout<<"program terminated";
+return 0;}
 
 
+
+}
+    if (inp == 'y') {
+        cout << "please enter your name";
+        cin >>name;
+        s1.playerdetails(name);
+        return 0;
+    }
+    else {
+        s1.playerdetails();
+        return 0;
+    }
+ }
 void arc::playerdetails(string Pname) {
     system("cls");
     cout << "current player is " << Pname << endl;
@@ -65,6 +134,8 @@ void arc::blackjck() {
     std::mt19937 gen(rd());
     std::uniform_int_distribution<> number(1, 10);
 }
+
+
 void arc::num_gss() {
     //....code for number guesser....
     cout << "we are playing number guesser" << endl;
@@ -94,59 +165,15 @@ int arc::game_selecter(int n) {
         blackjck();
     return 0;
 }
-void arc::gamelist() {
-    cout << "Available Games:\n";
-    int n = 0;
-    for (int i = 0; i < 2; i++) {
-        cout << i + 1 << ". " << gamelst[i] << endl;
-    }
-    cout << "enter game number to play" << endl;
-    cin.clear();
-    cin >> n;
-    if (n > 2 || n < 1)
-        cout << "enter valid input";
-    if (n < 3 && n > 0)
-        game_selecter(n);
-}
+
 
 int main() { 
     arc s1;
-    char inp;
-    string name;
-    cout << "do you want to enter your name " << endl;
-    cout << " y/n" << endl;
-    cin >> inp;
-    if(inp=='d')
-    {
-    cout<<"please enter secret code"<<endl;
-    cin>>s1.userpassword;
-    if(chck(s1)==true)
-    {
-        system("cls");
-     cout<<"youre in developer mode"<<endl;
-     cout<<"____________________"<<endl<<endl;
-     cout<<"1.Ban Player"<<endl;
-     cout<<"2.Show Player History"<<endl;
-     cout<<"3.whitelist Player"<<endl<<endl<<endl;
-        return 0;
-    }
-else
- {
-cout<<"program terminated";
-return 0;}
-
-
-
-}
-    if (inp == 'y') {
-        cout << "please enter your name";
-        cin >> name;
-        s1.playerdetails(name);
-    }
-    else {
-        s1.playerdetails();
-    }
-    s1.gamelist();
+    bool x=true;
+    s1.menu();
+    s1.valid(s1);
+    s1.menu(true);
+    s1.menu(x);
     return 0;
 }
 
